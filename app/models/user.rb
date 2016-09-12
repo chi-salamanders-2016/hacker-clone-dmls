@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   validate :check_password_length
     def password
-      @password ||= BCrypt::Password.new(hashed_password)
+      @password ||= BCrypt::Password.new(password_hash)
     end
 
     def password=(new_password)
@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
     end
 
     def check_password_length
-      if @plaintext_password.length < 6
+      if new_password.length < 6
         errors.add(:password, "must be greater than 6 characters")
       end
     end
